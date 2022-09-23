@@ -41,17 +41,21 @@
 #define __SYS_OSC_CLK     (__IRC16M)                /* main oscillator frequency */
 
 /* select a system clock by uncommenting the following line */
-//#define __SYSTEM_CLOCK_IRC16M                   (uint32_t)(__IRC16M)
+// #define __SYSTEM_CLOCK_IRC16M                   (uint32_t)(__IRC16M)
 //#define __SYSTEM_CLOCK_HXTAL                    (uint32_t)(__HXTAL)
+//#define __SYSTEM_CLOCK_30M_PLL_IRC16M          (uint32_t)(32000000)
+#define __SYSTEM_CLOCK_40M_PLL_IRC16M          (uint32_t)(40000000)
+//#define __SYSTEM_CLOCK_48M_PLL_IRC16M          (uint32_t)(48000000)
+//#define __SYSTEM_CLOCK_64M_PLL_IRC16M          (uint32_t)(64000000)
 //#define __SYSTEM_CLOCK_120M_PLL_IRC16M          (uint32_t)(120000000)
 //#define __SYSTEM_CLOCK_120M_PLL_8M_HXTAL        (uint32_t)(120000000)
 //#define __SYSTEM_CLOCK_120M_PLL_25M_HXTAL       (uint32_t)(120000000)
-//#define __SYSTEM_CLOCK_168M_PLL_IRC16M          (uint32_t)(168000000)
+//#define __SYSTEM_CLOCK_160M_PLL_IRC16M          (uint32_t)(160000000)
 //#define __SYSTEM_CLOCK_168M_PLL_8M_HXTAL        (uint32_t)(168000000)
 //#define __SYSTEM_CLOCK_168M_PLL_25M_HXTAL       (uint32_t)(168000000)
 //#define __SYSTEM_CLOCK_200M_PLL_IRC16M          (uint32_t)(200000000)
 //#define __SYSTEM_CLOCK_200M_PLL_8M_HXTAL        (uint32_t)(200000000)
-#define __SYSTEM_CLOCK_200M_PLL_25M_HXTAL       (uint32_t)(200000000)
+//#define __SYSTEM_CLOCK_200M_PLL_25M_HXTAL       (uint32_t)(200000000)
 //#define __SYSTEM_CLOCK_240M_PLL_IRC16M          (uint32_t)(240000000)
 //#define __SYSTEM_CLOCK_240M_PLL_8M_HXTAL        (uint32_t)(240000000)
 //#define __SYSTEM_CLOCK_240M_PLL_25M_HXTAL       (uint32_t)(240000000)
@@ -72,6 +76,18 @@ static void system_clock_16m_irc16m(void);
 #elif defined (__SYSTEM_CLOCK_HXTAL)
 uint32_t SystemCoreClock = __SYSTEM_CLOCK_HXTAL;
 static void system_clock_hxtal(void);
+#elif defined (__SYSTEM_CLOCK_30M_PLL_IRC16M)
+uint32_t SystemCoreClock = __SYSTEM_CLOCK_30M_PLL_IRC16M;
+static void system_clock_30m_irc16m(void);
+#elif defined (__SYSTEM_CLOCK_40M_PLL_IRC16M)
+uint32_t SystemCoreClock = __SYSTEM_CLOCK_40M_PLL_IRC16M;
+static void system_clock_40m_irc16m(void);
+#elif defined (__SYSTEM_CLOCK_48M_PLL_IRC16M)
+uint32_t SystemCoreClock = __SYSTEM_CLOCK_48M_PLL_IRC16M;
+static void system_clock_48m_irc16m(void);
+#elif defined (__SYSTEM_CLOCK_64M_PLL_IRC16M)
+uint32_t SystemCoreClock = __SYSTEM_CLOCK_64M_PLL_IRC16M;
+static void system_clock_64m_irc16m(void);
 #elif defined (__SYSTEM_CLOCK_120M_PLL_IRC16M)
 uint32_t SystemCoreClock = __SYSTEM_CLOCK_120M_PLL_IRC16M;
 static void system_clock_120m_irc16m(void);
@@ -81,9 +97,9 @@ static void system_clock_120m_8m_hxtal(void);
 #elif defined (__SYSTEM_CLOCK_120M_PLL_25M_HXTAL)
 uint32_t SystemCoreClock = __SYSTEM_CLOCK_120M_PLL_25M_HXTAL;
 static void system_clock_120m_25m_hxtal(void);
-#elif defined (__SYSTEM_CLOCK_168M_PLL_IRC16M)
-uint32_t SystemCoreClock = __SYSTEM_CLOCK_168M_PLL_IRC16M;
-static void system_clock_168m_irc16m(void);
+#elif defined (__SYSTEM_CLOCK_160M_PLL_IRC16M)
+uint32_t SystemCoreClock = __SYSTEM_CLOCK_160M_PLL_IRC16M;
+static void system_clock_160m_irc16m(void);
 #elif defined (__SYSTEM_CLOCK_168M_PLL_8M_HXTAL)
 uint32_t SystemCoreClock = __SYSTEM_CLOCK_168M_PLL_8M_HXTAL;
 static void system_clock_168m_8m_hxtal(void);
@@ -169,14 +185,22 @@ static void system_clock_config(void)
     system_clock_16m_irc16m();
 #elif defined (__SYSTEM_CLOCK_HXTAL)
     system_clock_hxtal();
+#elif defined (__SYSTEM_CLOCK_30M_PLL_IRC16M)
+    system_clock_30m_irc16m();
+#elif defined (__SYSTEM_CLOCK_40M_PLL_IRC16M)
+    system_clock_40m_irc16m();
+#elif defined (__SYSTEM_CLOCK_48M_PLL_IRC16M)
+    system_clock_48m_irc16m();
+#elif defined (__SYSTEM_CLOCK_64M_PLL_IRC16M)
+    system_clock_64m_irc16m();
 #elif defined (__SYSTEM_CLOCK_120M_PLL_IRC16M)
     system_clock_120m_irc16m();
 #elif defined (__SYSTEM_CLOCK_120M_PLL_8M_HXTAL)
     system_clock_120m_8m_hxtal();
 #elif defined (__SYSTEM_CLOCK_120M_PLL_25M_HXTAL)
     system_clock_120m_25m_hxtal();
-#elif defined (__SYSTEM_CLOCK_168M_PLL_IRC16M)
-    system_clock_168m_irc16m();
+#elif defined (__SYSTEM_CLOCK_160M_PLL_IRC16M)
+    system_clock_160m_irc16m();
 #elif defined (__SYSTEM_CLOCK_168M_PLL_8M_HXTAL)
     system_clock_168m_8m_hxtal();
 #elif defined (__SYSTEM_CLOCK_168M_PLL_25M_HXTAL)
@@ -444,7 +468,7 @@ static void system_clock_120m_25m_hxtal(void)
         while(1){
         }
     }
-         
+
     RCU_APB1EN |= RCU_APB1EN_PMUEN;
     PMU_CTL |= PMU_CTL_LDOVS;
 
@@ -471,12 +495,12 @@ static void system_clock_120m_25m_hxtal(void)
     PMU_CTL |= PMU_CTL_HDEN;
     while(0U == (PMU_CS & PMU_CS_HDRF)){
     }
-    
+
     /* select the high-drive mode */
     PMU_CTL |= PMU_CTL_HDS;
     while(0U == (PMU_CS & PMU_CS_HDSRF)){
-    } 
-    
+    }
+
     /* select PLL as system clock */
     RCU_CFG0 &= ~RCU_CFG0_SCS;
     RCU_CFG0 |= RCU_CKSYSSRC_PLLP;
@@ -485,15 +509,282 @@ static void system_clock_120m_25m_hxtal(void)
     while(0U == (RCU_CFG0 & RCU_SCSS_PLLP)){
     }
 }
-
-#elif defined (__SYSTEM_CLOCK_168M_PLL_IRC16M)
+#elif defined (__SYSTEM_CLOCK_30M_PLL_IRC16M)
 /*!
     \brief      configure the system clock to 168M by PLL which selects IRC16M as its clock source
     \param[in]  none
     \param[out] none
     \retval     none
 */
-static void system_clock_168m_irc16m(void)
+static void system_clock_30m_irc16m(void)
+{
+    uint32_t timeout = 0U;
+    uint32_t stab_flag = 0U;
+
+    /* enable IRC16M */
+    RCU_CTL |= RCU_CTL_IRC16MEN;
+
+    /* wait until IRC16M is stable or the startup time is longer than IRC16M_STARTUP_TIMEOUT */
+    do{
+        timeout++;
+        stab_flag = (RCU_CTL & RCU_CTL_IRC16MSTB);
+    }while((0U == stab_flag) && (IRC16M_STARTUP_TIMEOUT != timeout));
+
+    /* if fail */
+    if(0U == (RCU_CTL & RCU_CTL_IRC16MSTB)){
+        while(1){
+        }
+    }
+
+    RCU_APB1EN |= RCU_APB1EN_PMUEN;
+    PMU_CTL |= PMU_CTL_LDOVS;
+
+    /* IRC16M is stable */
+    /* AHB = SYSCLK */
+    RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
+    /* APB2 = AHB/2 */
+    RCU_CFG0 |= RCU_APB2_CKAHB_DIV1;
+    /* APB1 = AHB/4 */
+    RCU_CFG0 |= RCU_APB1_CKAHB_DIV1;
+
+    /* Configure the main PLL, PSC = 16, PLL_N = 60, PLL_P = 2, PLL_Q = 7 */
+    RCU_PLL = (16U | (60U << 6U) | (((2U >> 1U) - 1U) << 16U) |
+                   (RCU_PLLSRC_IRC16M) | (7U << 24U));
+
+    /* enable PLL */
+    RCU_CTL |= RCU_CTL_PLLEN;
+
+    /* wait until PLL is stable */
+    while(0U == (RCU_CTL & RCU_CTL_PLLSTB)){
+    }
+
+    /* Enable the high-drive to extend the clock frequency to 168 Mhz */
+    PMU_CTL |= PMU_CTL_HDEN;
+    while(0U == (PMU_CS & PMU_CS_HDRF)){
+    }
+
+    /* select the high-drive mode */
+    PMU_CTL |= PMU_CTL_HDS;
+    while(0U == (PMU_CS & PMU_CS_HDSRF)){
+    }
+
+    /* select PLL as system clock */
+    RCU_CFG0 &= ~RCU_CFG0_SCS;
+    RCU_CFG0 |= RCU_CKSYSSRC_PLLP;
+
+    /* wait until PLL is selected as system clock */
+    while(0U == (RCU_CFG0 & RCU_SCSS_PLLP)){
+    }
+}
+#elif defined (__SYSTEM_CLOCK_40M_PLL_IRC16M)
+/*!
+    \brief      configure the system clock to 168M by PLL which selects IRC16M as its clock source
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+static void system_clock_40m_irc16m(void)
+{
+    uint32_t timeout = 0U;
+    uint32_t stab_flag = 0U;
+
+    /* enable IRC16M */
+    RCU_CTL |= RCU_CTL_IRC16MEN;
+
+    /* wait until IRC16M is stable or the startup time is longer than IRC16M_STARTUP_TIMEOUT */
+    do{
+        timeout++;
+        stab_flag = (RCU_CTL & RCU_CTL_IRC16MSTB);
+    }while((0U == stab_flag) && (IRC16M_STARTUP_TIMEOUT != timeout));
+
+    /* if fail */
+    if(0U == (RCU_CTL & RCU_CTL_IRC16MSTB)){
+        while(1){
+        }
+    }
+
+    RCU_APB1EN |= RCU_APB1EN_PMUEN;
+    PMU_CTL |= PMU_CTL_LDOVS;
+
+    /* IRC16M is stable */
+    /* AHB = SYSCLK */
+    RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
+    /* APB2 = AHB/2 */
+    RCU_CFG0 |= RCU_APB2_CKAHB_DIV2;
+    /* APB1 = AHB/2  20MHz for I2C */
+    RCU_CFG0 |= RCU_APB1_CKAHB_DIV1;
+
+    /* Configure the main PLL, PSC = 16, PLL_N = 60, PLL_P = 2, PLL_Q = 7 */ 
+    RCU_PLL = (16U | (80U << 6U) | (((2U >> 1U) - 1U) << 16U) |
+                   (RCU_PLLSRC_IRC16M) | (7U << 24U));
+
+    /* enable PLL */
+    RCU_CTL |= RCU_CTL_PLLEN;
+
+    /* wait until PLL is stable */
+    while(0U == (RCU_CTL & RCU_CTL_PLLSTB)){
+    }
+
+    /* Enable the high-drive to extend the clock frequency to 168 Mhz */
+    PMU_CTL |= PMU_CTL_HDEN;
+    while(0U == (PMU_CS & PMU_CS_HDRF)){
+    }
+
+    /* select the high-drive mode */
+    PMU_CTL |= PMU_CTL_HDS;
+    while(0U == (PMU_CS & PMU_CS_HDSRF)){
+    }
+
+    /* select PLL as system clock */
+    RCU_CFG0 &= ~RCU_CFG0_SCS;
+    RCU_CFG0 |= RCU_CKSYSSRC_PLLP;
+
+    /* wait until PLL is selected as system clock */
+    while(0U == (RCU_CFG0 & RCU_SCSS_PLLP)){
+    }
+}
+#elif defined (__SYSTEM_CLOCK_48M_PLL_IRC16M)
+/*!
+    \brief      configure the system clock to 168M by PLL which selects IRC16M as its clock source
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+static void system_clock_48m_irc16m(void)
+{
+    uint32_t timeout = 0U;
+    uint32_t stab_flag = 0U;
+
+    /* enable IRC16M */
+    RCU_CTL |= RCU_CTL_IRC16MEN;
+
+    /* wait until IRC16M is stable or the startup time is longer than IRC16M_STARTUP_TIMEOUT */
+    do{
+        timeout++;
+        stab_flag = (RCU_CTL & RCU_CTL_IRC16MSTB);
+    }while((0U == stab_flag) && (IRC16M_STARTUP_TIMEOUT != timeout));
+
+    /* if fail */
+    if(0U == (RCU_CTL & RCU_CTL_IRC16MSTB)){
+        while(1){
+        }
+    }
+
+    RCU_APB1EN |= RCU_APB1EN_PMUEN;
+    PMU_CTL |= PMU_CTL_LDOVS;
+
+    /* IRC16M is stable */
+    /* AHB = SYSCLK */
+    RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
+    /* APB2 = AHB/2 */
+    RCU_CFG0 |= RCU_APB2_CKAHB_DIV2;
+    /* APB1 = AHB/4 */
+    RCU_CFG0 |= RCU_APB1_CKAHB_DIV4;
+
+    /* Configure the main PLL, PSC = 16, PLL_N = 60, PLL_P = 2, PLL_Q = 7 */
+    RCU_PLL = (16U | (96U << 6U) | (((2U >> 1U) - 1U) << 16U) |
+                   (RCU_PLLSRC_IRC16M) | (7U << 24U));
+
+    /* enable PLL */
+    RCU_CTL |= RCU_CTL_PLLEN;
+
+    /* wait until PLL is stable */
+    while(0U == (RCU_CTL & RCU_CTL_PLLSTB)){
+    }
+
+    /* Enable the high-drive to extend the clock frequency to 168 Mhz */
+    PMU_CTL |= PMU_CTL_HDEN;
+    while(0U == (PMU_CS & PMU_CS_HDRF)){
+    }
+
+    /* select the high-drive mode */
+    PMU_CTL |= PMU_CTL_HDS;
+    while(0U == (PMU_CS & PMU_CS_HDSRF)){
+    }
+
+    /* select PLL as system clock */
+    RCU_CFG0 &= ~RCU_CFG0_SCS;
+    RCU_CFG0 |= RCU_CKSYSSRC_PLLP;
+
+    /* wait until PLL is selected as system clock */
+    while(0U == (RCU_CFG0 & RCU_SCSS_PLLP)){
+    }
+}
+#elif defined (__SYSTEM_CLOCK_64M_PLL_IRC16M)
+/*!
+    \brief      configure the system clock to 168M by PLL which selects IRC16M as its clock source
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+static void system_clock_64m_irc16m(void)
+{
+    uint32_t timeout = 0U;
+    uint32_t stab_flag = 0U;
+
+    /* enable IRC16M */
+    RCU_CTL |= RCU_CTL_IRC16MEN;
+
+    /* wait until IRC16M is stable or the startup time is longer than IRC16M_STARTUP_TIMEOUT */
+    do{
+        timeout++;
+        stab_flag = (RCU_CTL & RCU_CTL_IRC16MSTB);
+    }while((0U == stab_flag) && (IRC16M_STARTUP_TIMEOUT != timeout));
+
+    /* if fail */
+    if(0U == (RCU_CTL & RCU_CTL_IRC16MSTB)){
+        while(1){
+        }
+    }
+
+    RCU_APB1EN |= RCU_APB1EN_PMUEN;
+    PMU_CTL |= PMU_CTL_LDOVS;
+
+    /* IRC16M is stable */
+    /* AHB = SYSCLK */
+    RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
+    /* APB2 = AHB/2 */
+    RCU_CFG0 |= RCU_APB2_CKAHB_DIV2;
+    /* APB1 = AHB/4 */
+    RCU_CFG0 |= RCU_APB1_CKAHB_DIV4;
+
+    /* Configure the main PLL, PSC = 16, PLL_N = 120, PLL_P = 2, PLL_Q = 7 */
+    RCU_PLL = (16U | (128U << 6U) | (((2U >> 1U) - 1U) << 16U) |
+                   (RCU_PLLSRC_IRC16M) | (7U << 24U));
+
+    /* enable PLL */
+    RCU_CTL |= RCU_CTL_PLLEN;
+
+    /* wait until PLL is stable */
+    while(0U == (RCU_CTL & RCU_CTL_PLLSTB)){
+    }
+
+    /* Enable the high-drive to extend the clock frequency to 168 Mhz */
+    PMU_CTL |= PMU_CTL_HDEN;
+    while(0U == (PMU_CS & PMU_CS_HDRF)){
+    }
+
+    /* select the high-drive mode */
+    PMU_CTL |= PMU_CTL_HDS;
+    while(0U == (PMU_CS & PMU_CS_HDSRF)){
+    }
+
+    /* select PLL as system clock */
+    RCU_CFG0 &= ~RCU_CFG0_SCS;
+    RCU_CFG0 |= RCU_CKSYSSRC_PLLP;
+
+    /* wait until PLL is selected as system clock */
+    while(0U == (RCU_CFG0 & RCU_SCSS_PLLP)){
+    }
+}
+#elif defined (__SYSTEM_CLOCK_160M_PLL_IRC16M)
+/*!
+    \brief      configure the system clock to 168M by PLL which selects IRC16M as its clock source
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+static void system_clock_160m_irc16m(void)
 {
     uint32_t timeout = 0U;
     uint32_t stab_flag = 0U;
@@ -524,8 +815,8 @@ static void system_clock_168m_irc16m(void)
     /* APB1 = AHB/4 */
     RCU_CFG0 |= RCU_APB1_CKAHB_DIV4;
 
-    /* Configure the main PLL, PSC = 16, PLL_N = 336, PLL_P = 2, PLL_Q = 7 */ 
-    RCU_PLL = (16U | (336U << 6U) | (((2U >> 1U) - 1U) << 16U) |
+    /* Configure the main PLL, PSC = 16, PLL_N = 336, PLL_P = 2, PLL_Q = 7 */
+    RCU_PLL = (16U | (320U << 6U) | (((2U >> 1U) - 1U) << 16U) |
                    (RCU_PLLSRC_IRC16M) | (7U << 24U));
 
     /* enable PLL */
@@ -588,7 +879,7 @@ static void system_clock_168m_8m_hxtal(void)
     /* APB1 = AHB/4 */
     RCU_CFG0 |= RCU_APB1_CKAHB_DIV4;
 
-    /* Configure the main PLL, PSC = 8, PLL_N = 336, PLL_P = 2, PLL_Q = 7 */ 
+    /* Configure the main PLL, PSC = 8, PLL_N = 336, PLL_P = 2, PLL_Q = 7 */
     RCU_PLL = (8U | (336 << 6U) | (((2 >> 1U) -1U) << 16U) |
                    (RCU_PLLSRC_HXTAL) | (7 << 24U));
 
